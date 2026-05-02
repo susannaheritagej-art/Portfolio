@@ -1,7 +1,11 @@
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Globe } from 'lucide-react';
+import { Globe, ArrowRight, CheckCircle2 } from 'lucide-react';
+import ContentOverlay from '../ui/ContentOverlay';
 
 export default function About() {
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+
   return (
     <section id="about" className="py-32 px-6 md:px-12 bg-brand-bg relative overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -17,16 +21,20 @@ export default function About() {
           <p className="text-3xl md:text-5xl font-display font-bold leading-tight mb-8">
             We are a Shopify Partner agency at the intersection of design, technology, and growth marketing.
           </p>
-          <div className="space-y-6 text-lg text-brand-dark/70 leading-relaxed max-w-xl">
+          <div className="space-y-6 text-lg text-brand-dark/70 leading-relaxed max-w-xl mb-10">
             <p>
               We don't build generic stores. We engineer high-converting ecommerce systems for brands that refuse to settle. Our approach combines data-led strategy with world-class design to create experiences that actually move the needle.
             </p>
-            <p>
-              Whether you're a high-growth startup or an established luxury brand, we provide the technical expertise and strategic insight needed to scale profitably in today's competitive digital landscape.
-            </p>
           </div>
+
+          <button 
+            onClick={() => setIsOverlayOpen(true)}
+            className="group flex items-center gap-3 text-brand-dark font-display font-black tracking-tighter text-xl hover:text-brand-purple transition-all"
+          >
+            Our Philosophy <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+          </button>
           
-          <div className="mt-12 flex items-center gap-6">
+          <div className="mt-16 flex items-center gap-6">
             <div className="flex -space-x-3">
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="w-12 h-12 rounded-full border-4 border-brand-bg bg-brand-purple/20 flex items-center justify-center text-xs font-bold text-brand-purple overflow-hidden">
@@ -97,6 +105,51 @@ export default function About() {
           </div>
         </motion.div>
       </div>
+
+      <ContentOverlay
+        isOpen={isOverlayOpen}
+        onClose={() => setIsOverlayOpen(false)}
+        title="Our Philosophy"
+        subtitle="We build high-performance growth engines, not just websites."
+        category="Deep Dive"
+      >
+        <div className="space-y-12">
+          <section>
+            <h4 className="text-2xl font-display font-bold text-brand-dark mb-4">The Conversion-First Approach</h4>
+            <p className="text-brand-dark/70 leading-relaxed">
+              Most agencies focus on how a site looks. We focus on how it performs. Aesthetic is useless if it doesn't guide the user towards a conversion. We use data-driven design patterns and psychological triggers to minimize friction and maximize trust.
+            </p>
+          </section>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="p-8 bg-brand-dark/[0.02] rounded-3xl border border-brand-dark/5">
+              <CheckCircle2 className="text-brand-purple mb-4" />
+              <h5 className="font-bold text-brand-dark mb-2">Technical Rigor</h5>
+              <p className="text-sm text-brand-dark/60">Pixel-perfect development with focus on page speed, mobile responsiveness, and SEO-optimized architecture.</p>
+            </div>
+            <div className="p-8 bg-brand-dark/[0.02] rounded-3xl border border-brand-dark/5">
+              <CheckCircle2 className="text-brand-purple mb-4" />
+              <h5 className="font-bold text-brand-dark mb-2">Strategic Growth</h5>
+              <p className="text-sm text-brand-dark/60">We don't just hand over a site. We provide the roadmap for scaling post-launch through CRO and technical support.</p>
+            </div>
+          </div>
+
+          <section>
+            <h4 className="text-2xl font-display font-bold text-brand-dark mb-4">Shopify Plus Expertise</h4>
+            <p className="text-brand-dark/70 leading-relaxed">
+              As specialized Shopify Partners, we know the ecosystem inside out. From complex app integrations and custom checkout extensions to headless commerce builds, we have the technical chops to handle enterprise-level requirements.
+            </p>
+          </section>
+          
+          <div className="aspect-video rounded-3xl bg-brand-dark/5 overflow-hidden relative overflow-hidden group">
+            {/* Placeholder for an agency reel or workspace image */}
+             <div className="absolute inset-0 bg-brand-purple/10 flex items-center justify-center">
+                <Globe className="text-brand-purple/20 animate-pulse" size={100} />
+             </div>
+             <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80" className="w-full h-full object-cover opacity-60 mix-blend-multiply" />
+          </div>
+        </div>
+      </ContentOverlay>
     </section>
   );
 }

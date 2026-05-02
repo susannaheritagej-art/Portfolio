@@ -57,8 +57,78 @@ export default function LiquidBackground() {
         }}
       />
 
+      {/* Moving Lines */}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.05]" xmlns="http://www.w3.org/2000/svg">
+        <motion.path
+          d="M-100 100 Q 200 300 500 100 T 1100 300"
+          stroke="url(#purple-gradient)"
+          strokeWidth="2"
+          fill="none"
+          animate={{
+            d: [
+              "M-100 100 Q 200 300 500 100 T 1100 300",
+              "M-100 300 Q 200 100 500 300 T 1100 100",
+              "M-100 100 Q 200 300 500 100 T 1100 300"
+            ]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.path
+          d="M-100 500 Q 300 700 700 500 T 1200 700"
+          stroke="url(#purple-gradient)"
+          strokeWidth="1"
+          fill="none"
+          initial={{ opacity: 0.5 }}
+          animate={{
+            d: [
+              "M-100 500 Q 300 700 700 500 T 1200 700",
+              "M-100 700 Q 300 500 700 700 T 1200 500",
+              "M-100 500 Q 300 700 700 500 T 1200 700"
+            ]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+        <defs>
+          <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#6B21A8" stopOpacity="0" />
+            <stop offset="50%" stopColor="#6B21A8" stopOpacity="1" />
+            <stop offset="100%" stopColor="#6B21A8" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      {/* Floating Particles */}
+      {[...Array(15)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-brand-purple/20 rounded-full"
+          initial={{
+            x: Math.random() * 100 + "%",
+            y: Math.random() * 100 + "%",
+            opacity: Math.random() * 0.5,
+          }}
+          animate={{
+            y: [null, "-20%"],
+            opacity: [0, 0.5, 0],
+          }}
+          transition={{
+            duration: Math.random() * 10 + 10,
+            repeat: Infinity,
+            ease: "linear",
+            delay: Math.random() * 20,
+          }}
+        />
+      ))}
+
       {/* Grid Overlay for Texture */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      
+      {/* Dynamic Scanline */}
+      <motion.div 
+        className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-brand-purple/10 to-transparent"
+        animate={{ y: ['0%', '100%'] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+      />
     </div>
   );
 }

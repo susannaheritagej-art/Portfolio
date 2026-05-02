@@ -1,15 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { ArrowRight, CheckCircle2, TrendingUp, Users, Target, Zap } from 'lucide-react';
+import ContentOverlay from '../ui/ContentOverlay';
 
 const stats = [
-  { label: 'Conversion Rate', value: '+41%', suffix: 'Increase' },
-  { label: 'Organic Traffic', value: '+62%', suffix: 'Growth' },
-  { label: 'Average Order Value', value: '+28%', suffix: 'Lift' },
-  { label: 'ROAS Improvement', value: '2.7x', suffix: 'Average' },
+  { label: 'Conversion Rate', value: '+41%', suffix: 'Increase', icon: Target },
+  { label: 'Organic Traffic', value: '+62%', suffix: 'Growth', icon: Users },
+  { label: 'Average Order Value', value: '+28%', suffix: 'Lift', icon: Zap },
+  { label: 'ROAS Improvement', value: '2.7x', suffix: 'Average', icon: TrendingUp },
 ];
 
 export default function Results() {
   const [sliderPosition, setSliderPosition] = useState(50);
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -80,7 +83,14 @@ export default function Results() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-12 text-center">
             <h3 className="text-2xl font-display font-bold mb-4">Store Architecture Transformation</h3>
-            <p className="text-brand-dark/50 max-w-xl mx-auto">Improved trust flow, UX structure, and conversion architecture designed to scale with your brand.</p>
+            <p className="text-brand-dark/50 max-w-xl mx-auto mb-8">Improved trust flow, UX structure, and conversion architecture designed to scale with your brand.</p>
+            
+            <button 
+              onClick={() => setIsOverlayOpen(true)}
+              className="group inline-flex items-center gap-3 text-brand-purple font-display font-bold tracking-widest text-xs uppercase hover:gap-5 transition-all"
+            >
+              View Full Impact Report <ArrowRight size={16} />
+            </button>
           </div>
 
           <div 
@@ -134,6 +144,65 @@ export default function Results() {
           </div>
         </div>
       </div>
+
+      <ContentOverlay
+        isOpen={isOverlayOpen}
+        onClose={() => setIsOverlayOpen(false)}
+        title="Impact & Results"
+        category="Case Studies"
+        subtitle="How we scale high-tier Shopify brands through engineering."
+      >
+        <div className="space-y-12">
+          <section>
+             <h4 className="text-2xl font-display font-bold text-brand-dark mb-4">The Proof of Work</h4>
+             <p className="text-brand-dark/70 leading-relaxed text-lg">
+                We believe in transparent results. Below are high-level proofs of the transformation we provide for our partners.
+             </p>
+          </section>
+
+          <div className="space-y-8">
+             <div className="p-8 bg-brand-dark/[0.02] rounded-3xl border border-brand-dark/5">
+                <div className="flex items-center justify-between mb-6">
+                   <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-brand-purple shadow-sm">
+                         <Target size={24} />
+                      </div>
+                      <div>
+                         <h5 className="font-bold text-brand-dark">Conversion Uplift</h5>
+                         <p className="text-xs text-brand-dark/40 uppercase tracking-widest font-bold">Fashion Enterprise</p>
+                      </div>
+                   </div>
+                   <span className="text-2xl font-display font-black text-brand-purple">+41%</span>
+                </div>
+                <p className="text-sm text-brand-dark/60 leading-relaxed">
+                   Redesigned the mobile checkout experience and implemented predictive search. Combined with high-performance theme optimization, this led to a significant jump in conversion across all devices.
+                </p>
+             </div>
+
+             <div className="p-8 bg-brand-dark/[0.02] rounded-3xl border border-brand-dark/5">
+                <div className="flex items-center justify-between mb-6">
+                   <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-brand-purple shadow-sm">
+                         <Zap size={24} />
+                      </div>
+                      <div>
+                         <h5 className="font-bold text-brand-dark">Page Speed Optimization</h5>
+                         <p className="text-xs text-brand-dark/40 uppercase tracking-widest font-bold">Luxury Wellness</p>
+                      </div>
+                   </div>
+                   <span className="text-2xl font-display font-black text-brand-blue">Sub-2s</span>
+                </div>
+                <p className="text-sm text-brand-dark/60 leading-relaxed">
+                   Migrated legacy theme to a custom-engineered Shopify 2.0 framework. reduced time-to-interactive by 64%, drastically lowering bounce rates on high-intent collection pages.
+                </p>
+             </div>
+          </div>
+
+          <div className="aspect-video bg-brand-dark/5 rounded-3xl flex items-center justify-center overflow-hidden italic text-brand-dark/20 font-display text-sm uppercase tracking-widest border border-dashed border-brand-dark/10">
+             [ Supplemental Proof Materials Pending Upload ]
+          </div>
+        </div>
+      </ContentOverlay>
     </section>
   );
 }
